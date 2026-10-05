@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CalculateurAge.Views.ResultatPage" Title="Résultat">
-    <VerticalStackLayout Padding="20" Spacing="16">
-        <Label x:Name="lblMessage" FontSize="22" />
-        <Button Text="Retour" Clicked="OnRetourClicked" />
-    </VerticalStackLayout>
+             xmlns:vm="clr-namespace:CalculateurAge.ViewModels"
+             x:Class="CalculateurAge.Views.ResultatPage" x:DataType="vm:ResultatViewModel"
+             Title="Résultat" SafeAreaEdges="All">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="560">
+            <Label Text="Votre résultat" FontSize="28" FontFamily="OpenSansSemibold"
+                   SemanticProperties.HeadingLevel="Level1" />
+            <Label Text="{Binding Calcul.Texte}" FontSize="24" />
+            <Label Text="{Binding Calcul.Message}" FontFamily="OpenSansSemibold" />
+            <Label Text="{Binding Calcul.Anniversaire}" />
+            <Label Text="{Binding Calcul.Detail}" FontSize="14" />
+            <Label Text="{Binding Erreur}" IsVisible="{Binding ErreurVisible}"
+                   TextColor="{AppThemeBinding Light=#AA2222, Dark=#FFA7A7}" />
+            <Button Text="Retour au calculateur" Command="{Binding RetourCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

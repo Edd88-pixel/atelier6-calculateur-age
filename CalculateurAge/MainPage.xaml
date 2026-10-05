@@ -2,16 +2,54 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CalculateurAge.ViewModels"
+             xmlns:models="clr-namespace:CalculateurAge.Models"
              x:Class="CalculateurAge.MainPage" x:DataType="vm:CalculateurViewModel"
-             Title="Calculateur">
+             Title="Calculateur d'âge" SafeAreaEdges="All">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12">
-            <Label Text="Nom" FontSize="16" />
-            <Entry Text="{Binding Nom, Mode=TwoWay}" Placeholder="Votre nom" />
-            <Label Text="Date de naissance" FontSize="16" />
-            <DatePicker Date="{Binding DateNaissance, Mode=TwoWay}" Format="dd/MM/yyyy" />
-            <Button Text="Calculer" Command="{Binding CalculerCommand}" />
-            <Label Text="{Binding Resultat}" FontSize="20" IsVisible="{Binding ResultatVisible}" />
+        <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="560">
+            <Label Text="Quel âge avez-vous ?" FontSize="28" FontFamily="OpenSansSemibold"
+                   SemanticProperties.HeadingLevel="Level1" />
+            <Label Text="Entrez un nom et une date de naissance." />
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Nom" FontFamily="OpenSansSemibold" />
+                <Entry Text="{Binding Nom, Mode=TwoWay}" Placeholder="Votre nom" MaxLength="100"
+                       ReturnType="Done" SemanticProperties.Description="Nom"
+                       SemanticProperties.Hint="Le nom est obligatoire pour calculer l'âge." />
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Date de naissance" FontFamily="OpenSansSemibold" />
+                <DatePicker Date="{Binding DateNaissance, Mode=TwoWay}" Format="dd/MM/yyyy"
+                            SemanticProperties.Description="Date de naissance" />
+            </VerticalStackLayout>
+            <Label Text="{Binding Erreur}" IsVisible="{Binding ErreurVisible}"
+                   TextColor="{AppThemeBinding Light=#AA2222, Dark=#FFA7A7}" />
+            <Button Text="Calculer" Command="{Binding CalculerCommand}"
+                    SemanticProperties.Hint="Affiche l'âge et ajoute le calcul à l'historique." />
+            <Button Text="Effacer" Command="{Binding EffacerCommand}" Style="{StaticResource SecondaryButton}"
+                    SemanticProperties.Hint="Réinitialise le formulaire. L'historique est conservé." />
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding ResultatVisible}">
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#D9DFE9, Dark=#49566B}" />
+                <Label Text="{Binding Resultat}" FontSize="22" FontFamily="OpenSansSemibold" />
+                <Label Text="{Binding Message}" />
+                <Label Text="{Binding Anniversaire}" />
+                <Button Text="Voir le résultat" Command="{Binding VoirResultatCommand}"
+                        Style="{StaticResource SecondaryButton}" />
+            </VerticalStackLayout>
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#D9DFE9, Dark=#49566B}" />
+            <Label Text="Historique" FontSize="20" FontFamily="OpenSansSemibold"
+                   SemanticProperties.HeadingLevel="Level2" />
+            <Label Text="Aucun calcul pour le moment." IsVisible="{Binding HistoriqueVide}" />
+            <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Historique}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:ResultatCalcul">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding Texte}" FontFamily="OpenSansSemibold" />
+                            <Label Text="{Binding Detail}" FontSize="14" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Label Text="Les 10 derniers calculs restent disponibles pendant cette session." FontSize="14" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

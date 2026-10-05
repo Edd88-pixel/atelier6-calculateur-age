@@ -2,8 +2,14 @@ namespace CalculateurAge;
 
 public partial class App : Application
 {
-    public App() => InitializeComponent();
+    private readonly IServiceProvider _services;
+
+    public App(IServiceProvider services)
+    {
+        InitializeComponent();
+        _services = services;
+    }
 
     protected override Window CreateWindow(IActivationState? activationState)
-        => new(new AppShell());
+        => new(_services.GetRequiredService<AppShell>());
 }
