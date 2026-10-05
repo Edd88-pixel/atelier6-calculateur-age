@@ -9,7 +9,6 @@
             <Label Text="Date de naissance" FontSize="16" />
             <DatePicker x:Name="pickerDate" Format="dd/MM/yyyy" />
             <Button x:Name="btnCalculer" Text="Calculer" Clicked="OnCalculerClicked" />
-            <Label x:Name="lblResultat" FontSize="20" IsVisible="False" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

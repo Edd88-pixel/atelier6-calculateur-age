@@ -1,3 +1,6 @@
+using System.Globalization;
+using CalculateurAge.Views;
+
 namespace CalculateurAge;
 
 public partial class MainPage : ContentPage
@@ -25,7 +28,8 @@ public partial class MainPage : ContentPage
         int age = DateTime.Today.Year - naissance.Year;
         if (naissance.Date > DateTime.Today.AddYears(-age)) age--;
 
-        lblResultat.Text = $"{entryNom.Text}, vous avez {age} ans";
-        lblResultat.IsVisible = true;
+        string nom = Uri.EscapeDataString(entryNom.Text);
+        await Shell.Current.GoToAsync(
+            $"{nameof(ResultatPage)}?nom={nom}&age={age.ToString(CultureInfo.InvariantCulture)}");
     }
 }
