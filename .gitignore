@@ -1,0 +1,6 @@
+# Exclusions techniques .NET / MAUI
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
